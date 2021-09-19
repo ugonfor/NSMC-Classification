@@ -36,7 +36,7 @@ def TrainOneEpoch(model, optimizer, data_loader, device, epoch):
     total_loss = 0
 
     data_loader = tqdm(data_loader)
-    
+     
     for batch in data_loader:
         # data bach
         data = {
@@ -46,7 +46,7 @@ def TrainOneEpoch(model, optimizer, data_loader, device, epoch):
         }
 
         #label
-        labels = batch['label']
+        labels = batch['label'].to(device)
 
         # prediction
         pred = model(data)
@@ -90,7 +90,7 @@ def TestModel(model):
         }
 
         #label
-        labels = batch['label']
+        labels = batch['label'].to(device)
         
         # prediction
         pred = model(data)
@@ -107,7 +107,7 @@ def TestModel(model):
 
 
 
-model = BertClassifier()
+model = BertClassifier() 
 model.to(device)
 
 
