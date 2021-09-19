@@ -13,7 +13,7 @@ from preprocess import NSMCDataset
 from model import BertClassifier
 
 # configure
-device = 'cpu'
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 MAX_LEN = 100
 BATCH_SIZE = 32
 MODE = 'train' # 'load'
@@ -108,6 +108,8 @@ def TestModel(model):
 
 
 model = BertClassifier() 
+if torch.cuda.device_count() > 1:
+    model = nn.DataParallel(model)
 model.to(device)
 
 
