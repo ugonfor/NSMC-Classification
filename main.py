@@ -6,14 +6,24 @@ from torch.optim import AdamW
 import torch.nn.functional as F
 
 from tqdm import tqdm
+import argparse
 
 # import my codes
 from utils import set_seed, save_model, load_model
 from preprocess import NSMCDataset
 from model import BertClassifier
 
+parser = argparse.ArgumentParser(description='device info')
+parser.add_argument('device', type=str)
+args = parser.parse_args()
+
+
 # configure
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+if args.device:
+    device = args.device
+    
+MULTIGPU = False 
 MAX_LEN = 100
 BATCH_SIZE = 32
 MODE = 'train' # 'load'
@@ -108,7 +118,7 @@ def TestModel(model):
 
 
 model = BertClassifier() 
-if torch.cuda.device_count() > 1:
+if torch.cuda.device_count() > 1 and MULTIGPU:
     model = nn.DataParallel(model)
 model.to(device)
 
