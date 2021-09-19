@@ -9,7 +9,7 @@ class NSMCDataset(Dataset):
         super(NSMCDataset, self).__init__()
         # load dataset from .txt file
         column_names = ["id","document","label"]
-        self.data = pd.read_csv(data_path, names = column_names, sep='\t')
+        self.data = pd.read_csv(data_path, names = column_names, sep='\t', keep_default_na=False)[1:]
 
         # bert tokenizer
         self.tokenizer = BertTokenizerFast.from_pretrained("kykim/bert-kor-base")
@@ -43,12 +43,12 @@ class NSMCDataset(Dataset):
 
 # for test
 if __name__ == "__main__":
-    
-    tokenizer_bert = BertTokenizerFast.from_pretrained("kykim/bert-kor-base")
-    print(tokenizer_bert.encode("안녕하세요? 제 이름은 유효곤입니다. ㅎㅎㅎㅎㅎ"))
-    print(tokenizer_bert.tokenize("안녕하세요? 제 이름은 유효곤입니다. ㅎㅎㅎㅎㅎ"))
-    
-    print(tokenizer_bert.cls_token_id)
-    print(tokenizer_bert.pad_token_id)
-    print(tokenizer_bert.unk_token_id)
-    print(tokenizer_bert.sep_token_id)
+    from torch.utils.data import DataLoader
+    dataset = NSMCDataset("./nsmc/ratings.txt", 100)
+    dataloader = DataLoader(dataset, batch_size=10, shuffle=False)
+    cnt = 0
+    for batch in dataloader:
+        #print(cnt)
+        cnt += 1
+    print(cnt)
+    print("DONE!")

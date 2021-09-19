@@ -14,7 +14,7 @@ from preprocess import NSMCDataset
 from model import BertClassifier
 
 parser = argparse.ArgumentParser(description='device info')
-parser.add_argument('device', type=str)
+parser.add_argument('--device', type=str)
 args = parser.parse_args()
 
 
@@ -22,7 +22,7 @@ args = parser.parse_args()
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 if args.device:
     device = args.device
-    
+
 MULTIGPU = False 
 MAX_LEN = 100
 BATCH_SIZE = 32
