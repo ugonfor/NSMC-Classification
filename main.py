@@ -24,15 +24,15 @@ if args.device:
     device = args.device
 
 MULTIGPU = False 
-MAX_LEN = 100
+MAX_LEN = 30
 BATCH_SIZE = 32
 MODE = 'train' # 'load'
 model_path = './model_pt'
-EPOCHS = 10
+EPOCHS = 4
 
 logfile = "./log"
 
-log = open(logfile, "wb")
+log = open(logfile, "w")
 
 set_seed(42)
 
