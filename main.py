@@ -7,6 +7,8 @@ import torch.nn.functional as F
 
 from tqdm import tqdm
 import argparse
+import time
+import os
 
 # import my codes
 from utils import set_seed, save_model, load_model
@@ -30,7 +32,8 @@ MODE = 'train' # 'load'
 model_path = './model_pt'
 EPOCHS = 4
 
-logfile = "./log"
+os.makedirs("./log",exist_ok=True)
+logfile = f"./log/log{time.ctime()}" 
 
 log = open(logfile, "w")
 
@@ -115,9 +118,10 @@ def TestModel(model):
         
         # for logging
         pred_y = torch.max(pred,1)[1]
+        labels = labels.max(1)[1]
         true_pred += (labels == pred_y).sum().item()
 
-        total_batch += len(batch)
+        total_batch += len(batch['input_ids'])
     
     # logging
     print(f"[!] TEST ACCURACY {true_pred/total_batch :.2f}")
@@ -140,6 +144,7 @@ if MODE == 'train':
 
     for epoch in range(EPOCHS):
         TrainOneEpoch(model, optimizer, train_dataloader, device, epoch)
+        TestModel(model)
     save_model(model, model_path, EPOCHS)
 
 # load model
@@ -151,8 +156,7 @@ else:
     print("[!] Check Configuration 'mode'")
     log.write("[!] Check Configuration 'mode'")
 
-
-
 # test model
 TestModel(model)
 
+log.close()

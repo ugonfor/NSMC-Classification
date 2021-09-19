@@ -2,6 +2,7 @@ import torch
 import random
 import numpy as np
 import os
+import time
 
 def set_seed(seed):
     
@@ -14,9 +15,9 @@ def save_model(model, model_path, epoch):
     state = {
         'model': model.state_dict()
     }
-    torch.save(state, os.path.join(model_path, f'model{epoch}.pth'))
+    torch.save(state, os.path.join(model_path, f'model{epoch}{time.ctime()}.pth'))
 
 
 def load_model(model, model_path, epoch):
-    state = torch.load(os.path.join(model_path, f'model{epoch}.pth'))
+    state = torch.load(os.path.join(model_path, f'model{epoch}{time.ctime()}.pth'))
     model.load_state_dict(state['model'])
