@@ -44,6 +44,7 @@ def TrainOneEpoch(model, optimizer, data_loader, device, epoch):
     total_batch = 0
     true_pred = 0
     total_loss = 0
+    batch_cnt = 0
 
     data_loader = tqdm(data_loader)
      
@@ -77,11 +78,18 @@ def TrainOneEpoch(model, optimizer, data_loader, device, epoch):
         total_loss += loss.item()
 
         # batch_size
-        total_batch += len(batch)
+        total_batch += len(batch['input_ids'])
+        batch_cnt += 1
         
+        if batch_cnt % 100 == 0:
+            # logging
+            print(f"[!] Epoch{epoch} | batch{batch_cnt} | Train loss : {total_loss:.4f} | Train Acc : {true_pred/total_batch * 100:.2f}%")
+            log.write(f"[!] Epoch{epoch} | batch{batch_cnt} | Train loss : {total_loss:.4f} | Train Acc : {true_pred/total_batch * 100:.2f}%\n")
+
+    
     # logging
-    print(f"[!] Epoch{epoch} | loss : {total_loss:.4f} | Batch Acc : {true_pred/total_batch :.2f}")
-    log.write(f"[!] Epoch{epoch} | loss : {total_loss:.4f} | Batch Acc : {true_pred/total_batch :.2f}\n")
+    print(f"[!] Epoch{epoch} | batch{batch_cnt} | Train loss : {total_loss:.4f} | Train Acc : {true_pred/total_batch * 100:.2f}%")
+    log.write(f"[!] Epoch{epoch} | batch{batch_cnt} | Train loss : {total_loss:.4f} | Train Acc : {true_pred/total_batch * 100:.2f}%\n")
 
 @torch.no_grad()
 def TestModel(model):
