@@ -124,8 +124,8 @@ def TestModel(model):
         total_batch += len(batch['input_ids'])
     
     # logging
-    print(f"[!] TEST ACCURACY {true_pred/total_batch :.2f}")
-    log.write(f"[!] TEST ACCURACY {true_pred/total_batch :.2f}\n")
+    print(f"[!] TEST ACCURACY {true_pred/total_batch *100:.2f}%")
+    log.write(f"[!] TEST ACCURACY {true_pred/total_batch *100 :.2f}%\n")
 
 
 
