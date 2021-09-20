@@ -29,6 +29,7 @@ MULTIGPU = False
 MAX_LEN = 30
 BATCH_SIZE = 32
 MODE = 'train' # 'load'
+model_name = 'model4Sun Sep 19 22:50:40 2021.pth' # if load
 model_path = './model_pt'
 EPOCHS = 4
 
@@ -149,7 +150,7 @@ if MODE == 'train':
 
 # load model
 elif MODE == 'load':
-    load_model(model, model_path, EPOCHS)
+    load_model(model, model_path, model_name, EPOCHS)
 
 # error
 else:

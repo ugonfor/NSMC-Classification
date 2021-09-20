@@ -18,6 +18,6 @@ def save_model(model, model_path, epoch):
     torch.save(state, os.path.join(model_path, f'model{epoch}{time.ctime()}.pth'))
 
 
-def load_model(model, model_path, epoch):
-    state = torch.load(os.path.join(model_path, f'model{epoch}{time.ctime()}.pth'))
+def load_model(model, model_path, model_name, epoch):
+    state = torch.load(os.path.join(model_path, model_name))
     model.load_state_dict(state['model'])
