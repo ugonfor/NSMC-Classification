@@ -25,42 +25,41 @@ ugonfor@gongon:~/NSMC-Classification$ tree
 3 directories, 12 files
 ```
 
-data_analysis.ipynb : NSMC 데이터셋의 길이, tokenize 시 토큰 수를 알아보기 위한 notebook
+* `data_analysis.ipynb` : NSMC 데이터셋의 길이, tokenize 시 토큰 수를 알아보기 위한 notebook
 
-log/* : train시 로그파일과, load시 로그 파일 두 개 로그파일 존재.
+* `log/*` : train시 로그파일과, load시 로그 파일 두 개 로그파일 존재.
 
-nsnc/* : nsmc 데이터셋
+* `nsnc/*` : nsmc 데이터셋
 
-model_pt/* : 모델 저장 되는 폴더
+* `model_pt/*` : 모델 저장 되는 폴더
 
-main.py : Bert Model을 Train하는 main python code.
+* `main.py` : Bert Model을 Train하는 main python code.
 
-model.py : BertClassifier 모델을 정의한 code
+* `model.py` : BertClassifier 모델을 정의한 code
 
-preprocess.py : NSMCDataset을 load하기 위해 Dataset을 정의한 code
+* `preprocess.py` : NSMCDataset을 load하기 위해 Dataset을 정의한 code
 
-
-utils.py : 재현을 위한 시드 값 고정, 모델 저장, 모델 불러오기 함수 구현
+* `utils.py` : 재현을 위한 시드 값 고정, 모델 저장, 모델 불러오기 함수 구현
 
 ## How to Use
 ### configuration
 
 main.py 내에 아래와 같이 설정 들을 조절하는 부분이 존재.
 
-device의 경우 args 인자로 전달할 수 있다.
+* `device`의 경우 args 인자로 전달할 수 있다.
 
-MULTIGPU를 사용여부 : True/False
+* `MULTIGPU`를 사용여부 : True/False
 
-Bert Tokenizer의 maximum length
+* `Bert Tokenizer의 maximum length`
 
-batch size : 배치사이즈
+* `batch size` : 배치사이즈
 
-train mode / load mode 설정:
+* `train mode / load mode` 설정:
 train mode로 할 시 Bert모델을 train하지만, load mode로 할 시, model_pt/{model_name} 의 파일로부터 model state 정보를 가져와서 ratings_test.txt에 대해서 test를 진행한다.
 
-model_path : 모델을 저장/ 저장되어있는 주소
+* `model_path` : 모델을 저장/ 저장되어있는 주소
 
-EPOCHS : 훈련 epochs 수
+* `EPOCHS` : 훈련 epochs 수
 
 위 값들에 대해서 main.py을 수정한 후, 실행하면 된다.
 ```py
